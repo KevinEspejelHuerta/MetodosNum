@@ -33,7 +33,7 @@ Cada rama puede ser explorada individualmente para consultar los ejercicios corr
 
 ---
 
-## Tecnologías utilizadas
+## Tecnologías utilizadas  
 
 Dependiendo del tema y de los ejercicios, pueden utilizarse distintos lenguajes y herramientas como:
 

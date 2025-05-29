@@ -1,0 +1,55 @@
+// Secante en Java
+public class S4 {
+
+    public static void main(String[] args) {
+        try {
+            // Definimos las aproximaciones iniciales y el error tolerado
+            double x0 = 1.0;  // Primera aproximación inicial
+            double x1 = 3.0;  // Segunda aproximación inicial
+            double error = 1e-6;  // Tolerancia de error
+
+            // Llamamos al método de la secante
+            double root = secant(x0, x1, error);
+
+            // Mostramos el resultado formateado
+            System.out.println("Raíz encontrada: " + String.format("%.3f", root));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (ArithmeticException e) {
+            System.out.println("Error matemático: " + e.getMessage());
+        }
+    }
+
+    public static double secant(double x0, double x1, double error) {
+        // Verificar que las aproximaciones iniciales sean distintas
+        if (x0 == x1) {
+            throw new IllegalArgumentException("x0 y x1 no pueden ser iguales.");
+        }
+
+        double x2;  // Almacenará la nueva aproximación
+
+        do {
+            // Calcular diferencia entre f(x1) y f(x0)
+            double denominator = f(x1) - f(x0);
+
+            // Evitar división por cero
+            if (Math.abs(denominator) < 1e-12) {
+                throw new ArithmeticException("División por cero (f(x1) ≈ f(x0)).");
+            }
+
+            // Fórmula de la secante: x2 = x1 - f(x1)*(x1 - x0)/(f(x1) - f(x0))
+            x2 = x1 - (f(x1) * (x1 - x0)) / denominator;
+
+            // Actualizar valores para la siguiente iteración
+            x0 = x1;
+            x1 = x2;
+
+        } while (Math.abs(f(x2)) > error);  // Continuar hasta alcanzar la precisión deseada
+
+        return x2;
+    }
+
+    public static double f(double x) {
+        return x * x * x - 2 * x - 5;
+    }
+}
